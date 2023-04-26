@@ -38,7 +38,8 @@ def get_movies():
 @app.route('/movies/<id>')
 def get_movie(id):
     movie = Movie.query.filter_by(id=id).one()
-    return jsonify(id=movie.id, title=movie.title, description=movie.description, date_of_release=movie.date_of_release)
+    return render_template('movie.html', movie=format_movie(movie))
+    # return jsonify(id=movie.id, title=movie.title, description=movie.description, date_of_release=movie.date_of_release)
 
 @app.route('/movies/<id>', methods=['DELETE'])
 def delete_movie(id):
