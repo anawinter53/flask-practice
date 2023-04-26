@@ -1,6 +1,6 @@
 from application import app, db
 from application.models import Movie
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 
 @app.route('/')
 def hello():
@@ -33,7 +33,7 @@ def get_movies():
     movies_list = []
     for movie in movies:
         movies_list.append(format_movie(movie))
-    return {'Movies': movies_list}
+    return render_template('movies.html', movies=movies_list, title='Movies')
 
 @app.route('/movies/<id>')
 def get_movie(id):
