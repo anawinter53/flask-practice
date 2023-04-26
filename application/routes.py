@@ -1,23 +1,35 @@
 from application import app, db
 from application.models import Movie
-from flask import request, jsonify, render_template
+from application.forms import MovieForm
+from flask import request, jsonify, render_template, redirect, url_for
+
 
 @app.route('/')
 def hello():
     return "Hey!"
 
-@app.route('/movies', methods=['POST'])
+@app.route('/createForm', methods=['GET','POST'])
 def create_movie():
-    description = request.json['description']
-    title = request.json['title']
-    date_of_release = request.json['date_of_release']
+    form = MovieForm()
+
+    # description = request.json['description']
+    # title = request.json['title']
+    # date_of_release = request.json['date_of_release']
     
-    movie = Movie(title, description, date_of_release)
+    # movie = Movie(title, description, date_of_release)
 
-    db.session.add(movie)
-    db.session.commit()
+    # db.session.add(movie)
+    # db.session.commit()
 
-    return jsonify(id=movie.id, title=movie.title, description=movie.description, date_of_release=movie.date_of_release)
+    if form.validate_on_submit():
+        movie = Movie(title=form.title.data, description=form.description.data, date_of_release=form.date_of_release.data)
+        db.session.add(movie)
+        db.session.commit()
+
+        return redirect(url_for('get_movies'))
+
+    return render_template('create.html', form=form)
+    # return jsonify(id=movie.id, title=movie.title, description=movie.description, date_of_release=movie.date_of_release)
 
 def format_movie(movie):
     return {

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <fieldset>
+            <legend>Create a movie</legend>
+            <div>
+                {{ form.title.label }}
+                {{ form.title }}
+            </div>
+            <div>
+                {{ form.description.label }}
+                {{ form.description }}
+            </div>
+            <div>
+                {{ form.date_of_release.label }}
+                {{ form.date_of_release }}
+            </div>
+        </fieldset>
+        <div>
+                {{ form.submit }}
+        </div>
+    </form>
+{% endblock %}
