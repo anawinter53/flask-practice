@@ -12,15 +12,6 @@ def hello():
 def create_movie():
     form = MovieForm()
 
-    # description = request.json['description']
-    # title = request.json['title']
-    # date_of_release = request.json['date_of_release']
-    
-    # movie = Movie(title, description, date_of_release)
-
-    # db.session.add(movie)
-    # db.session.commit()
-
     if form.validate_on_submit():
         movie = Movie(title=form.title.data, description=form.description.data, date_of_release=form.date_of_release.data)
         db.session.add(movie)
@@ -29,7 +20,6 @@ def create_movie():
         return redirect(url_for('get_movies'))
 
     return render_template('create.html', form=form)
-    # return jsonify(id=movie.id, title=movie.title, description=movie.description, date_of_release=movie.date_of_release)
 
 def format_movie(movie):
     return {
